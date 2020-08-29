@@ -11,7 +11,7 @@ class Ajax {
         // This filter is used within WP_Query::get_posts() immediately after
         // posts are fetched and internally processed. If a fetched post has no
         // content, the default content on the settings page is used.
-        // WP_Query::get_posts() is called by the_content() below.
+        // WP_Query::get_posts() is called by $wp_query->the_post() below.
         add_filter( 'the_posts', [ $this, 'filter_the_post' ], 0, 2 );
 
         $wp_query = new \WP_Query( [
@@ -27,9 +27,9 @@ class Ajax {
         ] );
 
         if ( $wp_query->have_posts() ) {
-            Plugin::log( "Randomly selected %s in the group %s", $wp_query->post->ID, $_POST['cta_group'] );
             $wp_query->the_post();
             the_content();
+            Plugin::log( "Randomly selected %s in the group %s", $wp_query->post->ID, $_POST['cta_group'] );
         }
         else {
             Plugin::log( "No CTAs in the group %s", $_POST['cta_group'] );
