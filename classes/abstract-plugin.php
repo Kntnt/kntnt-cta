@@ -117,6 +117,7 @@ abstract class Abstract_Plugin {
     public static final function is_context( $context ) {
         return 'any' == $context ||
                'public' == $context && ( ! defined( 'WP_ADMIN' ) || ! WP_ADMIN ) ||
+               'rest' == $context && self::_is_rest_api_request() ||
                'ajax' == $context && defined( 'DOING_AJAX' ) && DOING_AJAX ||
                'admin' == $context && defined( 'WP_ADMIN' ) && WP_ADMIN && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ||
                'cron' == $context && defined( 'DOING_CRON' ) && DOING_CRON ||
@@ -361,7 +362,14 @@ abstract class Abstract_Plugin {
     // must be active for his plugin to work.
     protected static function dependencies() { return []; }
 
-    private static final function _log( $message = '', ...$args ) {
+    // Awaiting a core function to test if a call is a REST API call
+    // (see https://core.trac.wordpress.org/ticket/42061) we use this
+    // solution inspired by WooCommerce (see https://github.com/woocommerce/woocommerce/pull/21090/files#diff-7a990aa0f401ec3e7e8a62c6b23d8b3e)
+    private static function _is_rest_api_request() {
+        return $_SERVER['REQUEST_URI'] && ( false !== strpos( $_SERVER['REQUEST_URI'], trailingslashit( rest_get_url_prefix() ) ) );
+    }
+
+    private static function _log( $message = '', ...$args ) {
         if ( ! is_string( $message ) ) {
             $args = [ $message ];
             $message = '%s';
