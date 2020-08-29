@@ -8,8 +8,8 @@ class Uninstaller {
 
         $this->remove_options( [ 'kntnt-cta' ] );
         $this->remove_files( [ 'kntnt-cta' ] );
-        $this->remove_terms( [ 'cta-groups' ] );
         $this->remove_posts( [ 'cta' ], true );
+        $this->remove_terms( [ 'cta-groups' ] );
         $this->remove_capabilities( [
 
             // Roles that get all capabilities by default.
