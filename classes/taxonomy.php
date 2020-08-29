@@ -86,9 +86,9 @@ class Taxonomy {
 
             // Default term to be used for the taxonomy.
             'default_term' => [
-                'name' => 'Default CTA Group',
-                'slug' => 'default-cta-group',
-                'description' => 'The CTA group used by default.',
+                'name' => 'Standard',
+                'slug' => 'standard-cta-group',
+                'description' => '',
             ],
 
             // An array of labels for this taxonomy.
