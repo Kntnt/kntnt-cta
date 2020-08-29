@@ -11,10 +11,8 @@ class Shortcode {
     public function shortcode( $atts ) {
         $output = '';
         if ( $cta_group = $this->cta_group() ) {
-            if ( wp_style_is( 'kntnt-cta-css', 'registered' ) ) {
-                wp_enqueue_style( 'kntnt-cta-css' );
-            }
-            wp_enqueue_script( 'kntnt-cta-js' );
+            CSS::load();
+            JS::load();
             $output = "<div class=\"kntnt-cta\" data-cta-group=\"{$cta_group}\"></div>";
         }
         return $output;

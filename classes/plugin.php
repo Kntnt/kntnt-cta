@@ -17,7 +17,8 @@ class Plugin extends Abstract_Plugin {
                     'Shortcode',
                 ],
                 'wp_head' => [
-                    'Registrar',
+                    'CSS',
+                    'JS',
                 ],
             ],
             'admin' => [

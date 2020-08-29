@@ -9,7 +9,24 @@ class Post_Type {
     private $slugs = 'ctas';
 
     public function run() {
+
         register_post_type( $this->slug, $this->custom_post_type() );
+
+        // This filter is used within WP_Query::get_posts() immediately after
+        // posts are fetched and internally processed. If a fetched post has no
+        // content, the default content on the settings page is used.
+        add_filter( 'the_posts', [ $this, 'filter_the_post' ], 0, 2 );
+
+    }
+
+    public function filter_the_post( $posts, $query ) {
+        foreach ( $posts as &$post ) {
+            if ( $this->slug == $post->post_type && ! $post->post_content ) {
+                $post->post_content = Plugin::option( 'content' );
+                Plugin::log( "Post content empty; fallback to default value." );
+            }
+        }
+        return $posts;
     }
 
     private function custom_post_type() {
