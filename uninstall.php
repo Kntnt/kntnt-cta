@@ -47,7 +47,7 @@ class Uninstaller {
     }
 
     private function remove_files( $subdirs ) {
-        $upload_dir = wp_upload_dir()['path'];
+        $upload_dir = wp_upload_dir()['basedir'];
         foreach ( $subdirs as $subdir ) {
             $base_dir = "$upload_dir/$subdir";
             $dir_it = new RecursiveDirectoryIterator( $base_dir, RecursiveDirectoryIterator::SKIP_DOTS );
