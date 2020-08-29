@@ -6,12 +6,10 @@ class Uninstaller {
 
     public function __construct() {
 
-        delete_option( 'kntnt-cta' );
-
-        $this->remove_posts( [ 'cta' ], true );
-
+        $this->remove_options( [ 'kntnt-cta' ] );
+        $this->remove_files( [ 'kntnt-cta' ] );
         $this->remove_terms( [ 'cta-groups' ] );
-
+        $this->remove_posts( [ 'cta' ], true );
         $this->remove_capabilities( [
 
             // Roles that get all capabilities by default.
@@ -21,25 +19,49 @@ class Uninstaller {
         ], [
 
             // Capabilities for managing CTAs (custom post type)
-            'edit_ctas',
-            'edit_others_ctas',
-            'edit_private_ctas',
-            'edit_published_ctas',
-            'publish_ctas',
-            'read_private_ctas',
-            'delete_ctas',
-            'delete_others_ctas',
-            'delete_private_ctas',
-            'delete_published_ctas',
+            'kntnt_edit_ctas',
+            'kntnt_edit_others_ctas',
+            'kntnt_edit_private_ctas',
+            'kntnt_edit_published_ctas',
+            'kntnt_publish_ctas',
+            'kntnt_read_private_ctas',
+            'kntnt_delete_ctas',
+            'kntnt_delete_others_ctas',
+            'kntnt_delete_private_ctas',
+            'kntnt_delete_published_ctas',
 
             // Capabilities for managing CTA Groups (custom taxonomy)
-            'manage_cta_groups',
-            'edit_cta_groups',
-            'delete_cta_groups',
-            'assign_cta_groups',
+            'kntnt_manage_cta_groups',
+            'kntnt_edit_cta_groups',
+            'kntnt_delete_cta_groups',
+            'kntnt_assign_cta_groups',
 
         ] );
 
+    }
+
+    private function remove_options( $options ) {
+        foreach ( $options as $option ) {
+            delete_option( $option );
+        }
+    }
+
+    private function remove_files( $subdirs ) {
+        $upload_dir = wp_upload_dir()['path'];
+        foreach ( $subdirs as $subdir ) {
+            $base_dir = "$upload_dir/$subdir";
+            $dir_it = new RecursiveDirectoryIterator( $base_dir, RecursiveDirectoryIterator::SKIP_DOTS );
+            $files = new RecursiveIteratorIterator( $dir_it, RecursiveIteratorIterator::CHILD_FIRST );
+            foreach ( $files as $file ) {
+                if ( $file->isDir() ) {
+                    rmdir( $file->getRealPath() );
+                }
+                else {
+                    unlink( $file->getRealPath() );
+                }
+            }
+            @rmdir( $base_dir );
+        }
     }
 
     private function remove_posts( $post_types, $force_delete = false ) {
@@ -73,5 +95,6 @@ class Uninstaller {
             }
         }
     }
+
 
 }
