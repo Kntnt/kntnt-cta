@@ -21,17 +21,14 @@ class Plugin extends Abstract_Plugin {
                     'JS',
                 ],
             ],
+            'rest' => [
+                'rest_api_init' => [
+                    'REST',
+                ],
+            ],
             'admin' => [
                 'init' => [
                     'Settings',
-                ],
-            ],
-            'ajax' => [
-                'wp_ajax_kntnt_cta' => [
-                    'Ajax',
-                ],
-                'wp_ajax_nopriv_kntnt_cta' => [
-                    'Ajax',
                 ],
             ],
         ];

@@ -2,15 +2,14 @@ jQuery(document).ready(function ($) {
     $('.kntnt-cta').each(function (i) {
         let $this = $(this);
         $.ajax({
-            method: "POST",
-            url: kntnt_cta.ajaxurl,
-            cache: false,
-            data: {
-                'action': 'kntnt_cta',
-                'cta_group': $this.data('cta-group')
+            method: 'GET',
+            url: wpApiSettings.root + 'kntnt-cta/v1/cta/' + $this.data('cta-group'),
+            headers: {
+                'X-WP-Nonce': wpApiSettings.nonce,
+            },
+            success: function (response) {
+                $this.html(response.content);
             }
-        }).done(function (html) {
-            $this.html(html);
         });
     });
 });
