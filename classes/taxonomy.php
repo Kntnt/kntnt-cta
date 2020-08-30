@@ -87,7 +87,7 @@ class Taxonomy {
             // Default term to be used for the taxonomy.
             'default_term' => [
                 'name' => 'Standard',
-                'slug' => 'standard-cta-group',
+                'slug' => 'standard',
                 'description' => '',
             ],
 
