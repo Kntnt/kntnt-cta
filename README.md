@@ -4,7 +4,27 @@ WordPress plugin that provides post type, taxonomy and shortcode to allow dynami
 
 ## Description
 
-TODO
+This plugin provides:
+
+* The custom post type *CTA* with a regular WordPress editor for body text. The body text shall contain a *Call To Action* (*CTA*) to be inserted on other pages. You can compare these with ads.
+* The custom taxonomy *CTA Group* which allows you to create groups of CTAs. You can compare these with ad groups. The taxonomy can also be used with other post types (e.g. WordPress’ built-in *post* and *page*) to indicate which CTA Groups are allowed.
+* The shortcode [cta] to be placed where you want a CTA.
+* A settings page with
+  - *Default Content* that will be used if a CTA has no body text,
+  - *Extra CSS* that will be loaded for pages with a CTA, and
+  - *Show CTA Group Metabox* that allows you to check post types (e.g. page and post) on which a CTA Group taxonomy selection meta box should be visible.
+
+A CTA can be part of several CTA Groups, and for a page of any post type to be associated with several CTA groups. In this way, it’s possible to allow some CTAs to appear on many or all pages, while others are only allowed to appear on a few or a single page. Thus, for each page, there might be many CTAs from different CTA Groups that are allowed.
+
+When the shortcode `[cta]` is encountered on a page, it is replaced with one of the allowed CTAs for that page.
+
+It’s also possible to list CTA Groups in the shortcode itself. CTA Groups are listed after the `cta` keyword with their slugs separated by commas (no spaces). If present, the listed CTA Groups will be used instead of the CTA Groups associated with the page. For example, `[cta buy,job]` will be replaced with a CTA from either the CTA Group with the slug buy or the one with the slug job. Alternatively, you can use this form as well: `[cta groups=”buy,job”]`.
+
+The plugin replaces the shortcode with a CTA in two steps. First, the shortcode is replaced with an empty `<div>`-element with the class `kntnt-cta` and a data-attribute that specifies a randomly selected CTA Group from those that may be considered according to the procedure described above. In parallel, a file with the extra CSS (see above) and a JavaScrip are added. When the JavaScript is executed by the visitor’s browser, it gets the CTA Group from data-attribute and sends it with a request to a REST endpoint provided by this plugin. The plugin randomly selects one of the CTAs in that CTA Group and sends its content back to the JavaScript, which replaces it within the `<div>`-element.
+
+If the page is cached, the CTA Group will not be updated until the cached page is purged, but the CTAs will be replaced on every load. This is a compromise between performance and flexibility. The behaviour might change in the future.
+
+With [*Advanced Custom Field*](https://sv.wordpress.org/plugins/advanced-custom-fields/) or a similar plugin, it is possible to hide the regular content editor and instead use custom fields, in order to create a more customizable interface. With [*Custom Content Shortcode*](https://sv.wordpress.org/plugins/custom-content-shortcode/) or a similar plugin, it is possible to create default content (see above) that uses values from those custom fields. In this way, default content can be used as a template for all CTAs.
 
 ## Installation
 
