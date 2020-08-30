@@ -39,6 +39,18 @@ class Settings extends Abstract_Settings {
             'description' => __( 'Extra CSS rules added to pages containing a CTA.', 'kntnt-cta' ),
         ];
 
+        $fields['post_types'] = [
+            'type' => 'checkbox group',
+            'label' => __( "Enabled post types", 'kntnt-cta' ),
+            'description' => __( 'Select post types that can have CTAs.', 'kntnt-cta' ),
+            'options' => $this->get_post_types(),
+            'default' => 'post',
+            'filter-after' => function ( $post_types ) {
+                $post_types['cta'] = 'cta';
+                return $post_types;
+            },
+        ];
+
         $fields['submit'] = [
             'type' => 'submit',
         ];
@@ -52,4 +64,9 @@ class Settings extends Abstract_Settings {
         Plugin::set_option( 'css_file_info', $info );
     }
 
+    public function get_post_types() {
+        $post_types = wp_list_pluck( get_post_types( [ 'public' => true ], 'objects' ), 'label' );
+        unset( $post_types['cta'] );
+        return $post_types;
+    }
 }

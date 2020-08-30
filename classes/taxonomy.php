@@ -10,7 +10,9 @@ class Taxonomy {
 
     public function run() {
         register_taxonomy( $this->slug, null, $this->custom_taxonomy() );
-        register_taxonomy_for_object_type( $this->slug, 'cta' );
+        foreach ( Plugin::option( 'post_types', [ 'cta-group' ] ) as $post_type ) {
+            register_taxonomy_for_object_type( $this->slug, $post_type );
+        }
     }
 
     private function custom_taxonomy() {
