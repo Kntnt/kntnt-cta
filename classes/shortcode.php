@@ -19,6 +19,8 @@ class Shortcode {
         // Fill in blanks with default values.
         $atts = $this->shortcode_atts( self::$defaults, $atts );
 
+        // Randomly pick a CTA Group from the shortcode if provided, otherwise
+        // from CTA Group taxonomy terms associated with current page.
         if ( $atts['groups'] ) {
             $cta_group = $this->randomly_pick( $atts['groups'] );
             Plugin::log( 'Randomly selected %s CTA Group from list provided in shortcode.', $cta_group );
