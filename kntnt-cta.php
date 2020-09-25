@@ -6,7 +6,7 @@
  * Plugin URI:        https://github.com/kntnt/kntnt-cta
  * GitHub Plugin URI: https://github.com/kntnt/kntnt-cta
  * Description:       Provides post type, taxonomy and shortcode to allow dynamic insertion of Call To Action (CTA).
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Thomas Barregren
  * Author URI:        https://www.kntnt.com/
  * License:           GPL-3.0+
@@ -20,7 +20,7 @@ namespace Kntnt\CTA;
 defined( 'WPINC' ) || die;
 
 // Uncomment following line to debug this plugin.
-define( 'KNTNT_CTA_DEBUG', true );
+// define( 'KNTNT_CTA_DEBUG', true );
 
 spl_autoload_register( function ( $class ) {
     $ns_len = strlen( __NAMESPACE__ );
